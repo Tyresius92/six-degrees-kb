@@ -1,3 +1,4 @@
 #include "hashtable.h"
 
-//Testing functions would go here. TBD
+void test_alloc_hashtable();
+void test_dealloc_hashtable();

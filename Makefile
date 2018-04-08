@@ -13,8 +13,8 @@ all: hashunit
 
 ## Make Unit Tests
 
-hashunit: hashtable.o hashunit.o
-	$(CC) -c hashtable.c hashunit.c 
+hashunit: hashtable.o unitmain.o hashunit.o
+	$(CC) $^ -o $@ 
 
 clean: 
 	-rm *.o 

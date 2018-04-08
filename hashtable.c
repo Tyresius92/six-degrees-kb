@@ -12,7 +12,7 @@
  ***************************/
 
 #include "hashtable.h"
-//#define Hashtable_t *struct DataItem;
+//#define Hashtable_t *struct DataItem
 
 /*************************
  * DataItem REPRESENTION *
@@ -26,11 +26,17 @@
 
 Hashtable_t alloc_hashtable(int num_elems)
 {
-        int size = sizeof(struct DataItem) * num_elems; 
+        assert(num_elems >= 0); 
 
-        Hashtable_t newTable = malloc(size); 
-
+        Hashtable_t newTable = calloc(num_elems, sizeof(struct DataItem)); 
+        
         return newTable; 
+}
+
+int hashtable_size(Hashtable_t table)
+{
+        (void) table;
+        return 0;
 }
 
 void insert_item(char* key, char* value)
@@ -38,14 +44,15 @@ void insert_item(char* key, char* value)
         (void) key; 
         (void) value; 
 }
-
-DataItem get_value_at(char* key)
+/*
+DataItem *get_value_at(char* key)
 {
         (void) key; 
         return NULL; 
 }
-
+*/
 void dealloc_hashtable(Hashtable_t table)
 {
-        (void) table; 
+        assert(table != NULL); 
+        free(table);
 }

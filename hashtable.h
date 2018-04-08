@@ -18,17 +18,18 @@
 
 #include <string.h> 
 #include <stdlib.h>
+#include <stdio.h>
+#include <assert.h>
 
 /*** DEFINITIONS AND TYPEDEFS ***/
 
-struct DataItem {
+typedef struct DataItem {
         char * key; 
         char * value;
-};
+        struct DataItem *next;
+} DataItem;
 
-
-typedef struct DataItem DataItem; 
-#define Hashtable_t *DataItem; 
+#define Hashtable_t DataItem*
 
 /**********************
  * FUNCTION CONTRACTS *
@@ -49,6 +50,13 @@ typedef struct DataItem DataItem;
  * @return      Hashtable_t - pointer to an array of char* (strings)
  */
 Hashtable_t alloc_hashtable(int num_elems); 
+
+/*
+ * hashtable_size
+ * 
+ * 
+ */
+int hashtable_size(Hashtable_t table); 
 
 /*
  * insert_item
