@@ -35,7 +35,7 @@ static const struct DataItem Empty_Struct = { NULL, NULL };
 struct hashtable {
         unsigned table_size;  
         unsigned elements_stored; 
-        DataItem *table; 
+        DataItem *array; 
 }; 
 
 
@@ -57,13 +57,13 @@ Hashtable_t alloc_hashtable(unsigned num_elems)
 
         newTable->table_size = determine_table_size(num_elems);
 
-        newTable->table = calloc(newTable->table_size, sizeof(struct DataItem)); 
+        newTable->array = calloc(newTable->table_size, sizeof(struct DataItem)); 
         
         //debug
         fprintf(stderr, "Calloc was successful\n"); 
         
         for (unsigned i = 0; i < newTable->table_size; i++) {
-                newTable->table[i] = Empty_Struct;
+                newTable->array[i] = Empty_Struct;
         }
 
         return newTable; 
@@ -117,13 +117,13 @@ void insert_item(Hashtable_t table, char* key, char* value)
         new_data.key = key; 
         new_data.value = value; 
 
-        while(table->table[index].key != NULL) {
+        while(table->array[index].key != NULL) {
                 index++; 
                 if (index == table->table_size)
                         index = 0; 
         }
 
-        table->table[index] = new_data; 
+        table->array[index] = new_data; 
 
 }
 
@@ -147,13 +147,20 @@ DataItem get_DataItem_with_key(Hashtable_t table, char* key)
         DataItem stored_DataItem;
         unsigned long index = hash((unsigned char*) key) % table->table_size; 
 
-        stored_DataItem = table->table[index]; 
+        DataItem *tableArray = table->array; 
+
+        while ((tableArray->key != NULL) && (tableArray->key != key)) {
+                index++; 
+        }
+
+        stored_DataItem = table->array[index]; 
 
         return stored_DataItem; 
 }
 
 void dealloc_hashtable(Hashtable_t table)
 {
+        free(table->array);
         free(table);
         table = NULL; 
 }
