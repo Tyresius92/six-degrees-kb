@@ -59,9 +59,6 @@ Hashtable_t alloc_hashtable(unsigned num_elems)
 
         newTable->array = calloc(newTable->table_size, sizeof(struct DataItem)); 
         
-        //debug
-        fprintf(stderr, "Calloc was successful\n"); 
-        
         for (unsigned i = 0; i < newTable->table_size; i++) {
                 newTable->array[i] = Empty_Struct;
         }

@@ -13,7 +13,7 @@ void test_alloc_hashtable()
         assert(testTable != NULL); 
         fprintf(stderr, "Alloc Successful!\n");
 
-        //free(testTable); 
+        free(testTable); 
         fprintf(stderr, 
                 "********** Leaving test_alloc_hashtable **********\n\n");
 }
@@ -31,7 +31,7 @@ void test_alloc_big_hashtable()
         assert(testTable != NULL); 
         fprintf(stderr, "Alloc Successful!\n");
 
-        //free(testTable); 
+        free(testTable); 
         fprintf(stderr, 
                 "********** Leaving test_alloc_big_hashtable **********\n\n");
 }
