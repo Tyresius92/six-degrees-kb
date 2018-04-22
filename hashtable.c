@@ -155,4 +155,5 @@ DataItem get_DataItem_with_key(Hashtable_t table, char* key)
 void dealloc_hashtable(Hashtable_t table)
 {
         free(table);
+        table = NULL; 
 }
