@@ -4,7 +4,7 @@
  * Interface for a hashtable of which stores strings. Implementation  *
  * requires the client to input the expected size needed allocating   *
  * the hashtable. Implementation requires client to manage key-value  *
- * relationship. Both key and value must be of type string.           *
+ * relationship. Both key and value must be of type char *            *
  **********************************************************************/
 
 /***************************

@@ -63,9 +63,6 @@ Hashtable_t alloc_hashtable(unsigned num_elems)
         fprintf(stderr, "Calloc was successful\n"); 
         
         for (unsigned i = 0; i < newTable->table_size; i++) {
-                //debug
-                //fprintf(stderr, "in for loop iteration %u\n", i);
-
                 newTable->table[i] = Empty_Struct;
         }
 
@@ -88,11 +85,19 @@ static unsigned determine_table_size(unsigned num_elems)
 
 unsigned hashtable_size(Hashtable_t table)
 {
+        assert(table != NULL); 
         return table->table_size;
+}
+
+unsigned hashtable_elems(Hashtable_t table)
+{
+        assert(table != NULL); 
+        return table->elements_stored; 
 }
 
 void insert_item(Hashtable_t table, char* key, char* value)
 {
+        assert(table != NULL); 
         assert(key != NULL); 
 
         table->elements_stored += 1; 
@@ -136,8 +141,9 @@ static unsigned long hash(unsigned char *key)
 
 DataItem get_DataItem_with_key(Hashtable_t table, char* key)
 {
-        (void) table; 
-        (void) key; 
+        assert(table != NULL); 
+        assert(key != NULL); 
+
         DataItem stored_DataItem;
         unsigned long index = hash((unsigned char*) key) % table->table_size; 
 
@@ -148,6 +154,5 @@ DataItem get_DataItem_with_key(Hashtable_t table, char* key)
 
 void dealloc_hashtable(Hashtable_t table)
 {
-        (void) table; 
-        //free(&table);
+        free(&table);
 }
