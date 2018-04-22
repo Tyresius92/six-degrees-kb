@@ -26,10 +26,9 @@
 typedef struct DataItem {
         char * key; 
         char * value;
-        struct DataItem *next;
 } DataItem;
 
-#define Hashtable_t DataItem*
+typedef struct hashtable *Hashtable_t;
 
 /**********************
  * FUNCTION CONTRACTS *
@@ -49,14 +48,14 @@ typedef struct DataItem {
  * @param       num_elems - the number of key-value pairs to be stored
  * @return      Hashtable_t - pointer to an array of char* (strings)
  */
-Hashtable_t alloc_hashtable(int num_elems); 
+Hashtable_t alloc_hashtable(unsigned num_elems); 
 
 /*
  * hashtable_size
  * 
- * 
+ * returns the number of elements currently in the hashtable
  */
-int hashtable_size(Hashtable_t table); 
+unsigned hashtable_size(Hashtable_t table); 
 
 /*
  * insert_item
@@ -65,13 +64,14 @@ int hashtable_size(Hashtable_t table);
  * in the hashtable. 
  *
  * CREs         key == NULL
- * UREs         n/a
+ * UREs         attempting to store the same key twice will result in
+ *              undefined behavior
  * 
  * @param       char* - key of the value to be stored
  * @param       char* - value to be stored
  * @return      n/a
  */
-void insert_item(char* key, char* value);
+void insert_item(Hashtable_t table, char* key, char* value);
 
 /* 
  * get_value_at
@@ -85,7 +85,7 @@ void insert_item(char* key, char* value);
  * @param       char* - the key value to find
  * @return      DataItem - struct containing the key and value
  */
-DataItem get_value_at(char* key); 
+DataItem get_DataItem_with_key(Hashtable_t table, char* key); 
 
 /*
  * dealloc_hashtable 

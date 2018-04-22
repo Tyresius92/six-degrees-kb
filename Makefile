@@ -17,4 +17,4 @@ hashunit: hashtable.o unitmain.o hashunit.o
 	$(CC) $^ -o $@ 
 
 clean: 
-	-rm *.o 
+	-rm *.o *~ hashunit

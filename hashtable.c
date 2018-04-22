@@ -12,47 +12,142 @@
  ***************************/
 
 #include "hashtable.h"
-//#define Hashtable_t *struct DataItem
 
-/*************************
- * DataItem REPRESENTION *
- *************************/
+/*********************
+ * MACRO DEFINITIONS *
+ *********************/
+
+#define NELEMS(A) (sizeof(A) / sizeof((A)[0]))
+
+/********************
+ * STATIC VARIABLES *
+ ********************/
+
+static const unsigned list_of_primes[] = { 3, 7, 17, 31, 127, 709, 5381, 52711, 
+                                           648379, 999959, 5034937, 9736927, 
+                                           15387793, 20843569, 26326043,
+                                           43467679, 49979323, 59620331 };
+
+static const struct DataItem Empty_Struct = { NULL, NULL };
+
+//typedef struct hashtable *Hashtable_t;
+
+struct hashtable {
+        unsigned table_size;  
+        unsigned elements_stored; 
+        DataItem *table; 
+}; 
 
 
+/*******************************
+ * PRIVATE METHOD DECLARATIONS *
+ *******************************/
+
+static unsigned determine_table_size(unsigned num_elems); 
+
+static unsigned long hash(unsigned char* key); 
 
 /************************
  * FUNCTION DEFINITIONS *
  ************************/
 
-Hashtable_t alloc_hashtable(int num_elems)
-{
-        assert(num_elems >= 0); 
+Hashtable_t alloc_hashtable(unsigned num_elems)
+{ 
+        Hashtable_t newTable = malloc(sizeof(struct hashtable)); 
 
-        Hashtable_t newTable = calloc(num_elems, sizeof(struct DataItem)); 
+        newTable->table_size = determine_table_size(num_elems);
+
+        newTable->table = calloc(newTable->table_size, sizeof(struct DataItem)); 
         
+        //debug
+        fprintf(stderr, "Calloc was successful\n"); 
+        
+        for (unsigned i = 0; i < newTable->table_size; i++) {
+                //debug
+                //fprintf(stderr, "in for loop iteration %u\n", i);
+
+                newTable->table[i] = Empty_Struct;
+        }
+
         return newTable; 
 }
 
-int hashtable_size(Hashtable_t table)
+static unsigned determine_table_size(unsigned num_elems)
 {
-        (void) table;
-        return 0;
+        unsigned i, table_size; 
+
+        for (i = 1; i < NELEMS(list_of_primes); i++) {
+                if (num_elems * 2 < list_of_primes[i]) {
+                        table_size = list_of_primes[i]; 
+                        break;
+                }
+        }
+
+        return table_size;
 }
 
-void insert_item(char* key, char* value)
+unsigned hashtable_size(Hashtable_t table)
 {
-        (void) key; 
-        (void) value; 
+        return table->table_size;
 }
-/*
-DataItem *get_value_at(char* key)
+
+void insert_item(Hashtable_t table, char* key, char* value)
 {
-        (void) key; 
-        return NULL; 
+        assert(key != NULL); 
+
+        table->elements_stored += 1; 
+        if (table->elements_stored == table->table_size) { 
+                fprintf(stderr, "Table is full, no room to insert.\n");
+                fprintf(stderr, "Exiting.\n"); 
+                exit(EXIT_FAILURE); 
+        } 
+
+        DataItem new_data; 
+        unsigned long index = hash((unsigned char*) key) % table->table_size;
+
+        //debug
+        fprintf(stderr, "Table size: %d\n", table->table_size); 
+        fprintf(stderr, "index: %ld\n", index); 
+
+        new_data.key = key; 
+        new_data.value = value; 
+
+        while(table->table[index].key != NULL) {
+                index++; 
+                if (index == table->table_size)
+                        index = 0; 
+        }
+
+        table->table[index] = new_data; 
+
 }
-*/
+
+static unsigned long hash(unsigned char *key)
+{
+        /* djb2 algorithm */
+        unsigned long hash = 5381;
+        int c;
+
+        while ((c = *key++))
+            hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+
+        return hash;
+}
+
+DataItem get_DataItem_with_key(Hashtable_t table, char* key)
+{
+        (void) table; 
+        (void) key; 
+        DataItem stored_DataItem;
+        unsigned long index = hash((unsigned char*) key) % table->table_size; 
+
+        stored_DataItem = table->table[index]; 
+
+        return stored_DataItem; 
+}
+
 void dealloc_hashtable(Hashtable_t table)
 {
-        assert(table != NULL); 
-        free(table);
+        (void) table; 
+        //free(&table);
 }
