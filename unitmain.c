@@ -3,8 +3,8 @@
 
 int main()
 {
-        test_alloc_hashtable();
-        test_alloc_big_hashtable();
+        //test_alloc_hashtable();
+        //test_alloc_big_hashtable();
         test_dealloc_hashtable();
         test_insert_item(); 
         test_insert_many_items();
