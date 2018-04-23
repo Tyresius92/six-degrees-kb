@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic
+CFLAGS = -std=c99 -O2 -Wall -Wextra -Werror -Wfatal-errors -pedantic
 
 INLCUDES = $(shell echo *.h)
 
