@@ -57,7 +57,7 @@ Hashtable_t alloc_hashtable(unsigned num_elems)
 
         newTable->table_size = determine_table_size(num_elems);
 
-        newTable->array = calloc(newTable->table_size, sizeof(struct DataItem)); 
+        newTable->array = calloc(newTable->table_size, sizeof(struct DataItem));
         
         for (unsigned i = 0; i < newTable->table_size; i++) {
                 newTable->array[i] = Empty_Struct;
@@ -68,7 +68,8 @@ Hashtable_t alloc_hashtable(unsigned num_elems)
 
 static unsigned determine_table_size(unsigned num_elems)
 {
-        unsigned i, table_size; 
+        unsigned i;
+        unsigned table_size; 
 
         for (i = 1; i < NELEMS(list_of_primes); i++) {
                 if (num_elems * 2 < list_of_primes[i]) {
