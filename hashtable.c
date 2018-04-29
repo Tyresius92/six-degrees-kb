@@ -30,30 +30,30 @@ static const unsigned list_of_primes[] = { 3, 7, 17, 31, 127, 709, 5381, 52711,
 
 static const struct DataItem Empty_Struct = { NULL, NULL };
 
-//typedef struct hashtable *Hashtable_t;
-
 struct hashtable {
         unsigned table_size;  
         unsigned elements_stored; 
         DataItem *array; 
 }; 
 
+typedef Hashtable_t T;
 
 /*******************************
  * PRIVATE METHOD DECLARATIONS *
  *******************************/
 
 static unsigned determine_table_size(unsigned num_elems); 
-
+static void is_full_table(T table);
 static unsigned long hash(unsigned char* key); 
+static unsigned long adjust_index_linear_probe(T table, unsigned long index);
 
 /************************
  * FUNCTION DEFINITIONS *
  ************************/
 
-Hashtable_t alloc_hashtable(unsigned num_elems)
+T alloc_hashtable(unsigned num_elems)
 { 
-        Hashtable_t newTable = malloc(sizeof(struct hashtable)); 
+        T newTable = malloc(sizeof(struct hashtable)); 
 
         newTable->table_size = determine_table_size(num_elems);
 
@@ -81,48 +81,45 @@ static unsigned determine_table_size(unsigned num_elems)
         return table_size;
 }
 
-unsigned hashtable_size(Hashtable_t table)
+unsigned hashtable_size(T table)
 {
         assert(table != NULL); 
         return table->table_size;
 }
 
-unsigned hashtable_elems(Hashtable_t table)
+unsigned hashtable_elems(T table)
 {
         assert(table != NULL); 
         return table->elements_stored; 
 }
 
-void insert_item(Hashtable_t table, char* key, char* value)
+void insert_item(T table, char* key, char* value)
 {
         assert(table != NULL); 
         assert(key != NULL); 
 
         table->elements_stored += 1; 
+        is_full_table(table); 
+
+        DataItem new_data; 
+        unsigned long index = hash((unsigned char*) key) % table->table_size;
+
+        new_data.key = key; 
+        new_data.value = value; 
+
+        index = adjust_index_linear_probe(table, index); 
+
+        table->array[index] = new_data; 
+
+}
+
+static void is_full_table(T table)
+{
         if (table->elements_stored == table->table_size) { 
                 fprintf(stderr, "Table is full, no room to insert.\n");
                 fprintf(stderr, "Exiting.\n"); 
                 exit(EXIT_FAILURE); 
         } 
-
-        DataItem new_data; 
-        unsigned long index = hash((unsigned char*) key) % table->table_size;
-
-        //debug
-        fprintf(stderr, "Table size: %d\n", table->table_size); 
-        fprintf(stderr, "index: %ld\n", index); 
-
-        new_data.key = key; 
-        new_data.value = value; 
-
-        while(table->array[index].key != NULL) {
-                index++; 
-                if (index == table->table_size)
-                        index = 0; 
-        }
-
-        table->array[index] = new_data; 
-
 }
 
 static unsigned long hash(unsigned char *key)
@@ -137,7 +134,18 @@ static unsigned long hash(unsigned char *key)
         return hash;
 }
 
-DataItem get_DataItem_with_key(Hashtable_t table, char* key)
+static unsigned long adjust_index_linear_probe(T table, unsigned long index)
+{
+        while(table->array[index].key != NULL) {
+                index++; 
+                if (index == table->table_size)
+                        index = 0; 
+        }
+
+        return index; 
+}
+
+DataItem get_DataItem_with_key(T table, char* key)
 {
         assert(table != NULL); 
         assert(key != NULL); 
@@ -156,7 +164,7 @@ DataItem get_DataItem_with_key(Hashtable_t table, char* key)
         return stored_DataItem; 
 }
 
-void dealloc_hashtable(Hashtable_t table)
+void dealloc_hashtable(T table)
 {
         free(table->array);
         free(table);

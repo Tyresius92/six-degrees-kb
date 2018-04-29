@@ -1,6 +1,10 @@
 #include "hashunit.h"
 #include "hashtable.h"
 
+/* 
+ * This test will still result in memory leaks. 
+ * Hidden array is allocated, but not deallocated.
+ */
 void test_alloc_hashtable()
 {
         fprintf(stderr, "********** Calling test_alloc_hashtable **********\n");
@@ -11,13 +15,17 @@ void test_alloc_hashtable()
         testTable = alloc_hashtable(elems);
 
         assert(testTable != NULL); 
-        fprintf(stderr, "Alloc Successful!\n");
+        fprintf(stderr, "Test Passes\n");
 
         free(testTable); 
         fprintf(stderr, 
                 "********** Leaving test_alloc_hashtable **********\n\n");
 }
 
+/* 
+ * This test will still result in memory leaks. 
+ * Hidden array is allocated, but not deallocated.
+ */
 void test_alloc_big_hashtable()
 {
         fprintf(stderr, 
@@ -29,7 +37,7 @@ void test_alloc_big_hashtable()
         testTable = alloc_hashtable(elems);
 
         assert(testTable != NULL); 
-        fprintf(stderr, "Alloc Successful!\n");
+        fprintf(stderr, "Test Passes\n");
 
         free(testTable); 
         fprintf(stderr, 
@@ -45,14 +53,12 @@ void test_dealloc_hashtable()
         testTable = alloc_hashtable(5); 
 
         assert(testTable != NULL); 
-        fprintf(stderr, "Alloc Successful!\n"); 
-        fprintf(stderr, "Deallocating\n"); 
 
         dealloc_hashtable(testTable); 
         testTable = NULL;
         assert(testTable == NULL); 
 
-        fprintf(stderr, "Deallocation Successful!\n");
+        fprintf(stderr, "Test Passes\n");
         fprintf(stderr, 
                 "********** Leaving test_dealloc_hashtable **********\n\n");
 }
@@ -65,34 +71,30 @@ void test_insert_item()
         testTable = alloc_hashtable(5); 
 
         assert(testTable != NULL); 
-        fprintf(stderr, "Alloc Successful!\n");
-        fprintf(stderr, "Calling insert\n");
 
         insert_item(testTable, "testing", "hello\n"); 
 
-        fprintf(stderr, "Deallocating\n"); 
+        fprintf(stderr, "Test Passes\n"); 
 
         dealloc_hashtable(testTable); 
         testTable = NULL;
         assert(testTable == NULL); 
 
-        fprintf(stderr, "Deallocation Successful!\n");
         fprintf(stderr, "********** Leaving test_insert_item **********\n\n");
 }
 
-void test_insert_many_items()
+void test_insert_and_retrieve_many_items()
 {
         fprintf(stderr, 
-                "********** Calling test_insert_many_items **********\n");
+                "********** Calling test_insert_and_retrieve_many_items **********\n");
         Hashtable_t testTable = NULL; 
 
         testTable = alloc_hashtable(5); 
         char *testKey[] = { "test1", "test2", "test3", "4test", "test5" };
         char *testValue[] = { "hello\n", "goodbye\n", "what up\n", 
-                            "banana\n", "i\n" };
+                            "banana\n", "i'm hungry\n" };
 
         assert(testTable != NULL); 
-        fprintf(stderr, "Calling insert repeatedly\n");
 
         for (int i = 0; i < 5; i++) {
                 insert_item(testTable, testKey[i], testValue[i]);
@@ -102,22 +104,24 @@ void test_insert_many_items()
                 DataItem test_data = get_DataItem_with_key(testTable, 
                                                            testKey[i]); 
 
-                fprintf(stderr, "%s: %s", test_data.key, test_data.value); 
-
-                if (test_data.value == testValue[i])
-                        fprintf(stderr, "Test Passes\n"); 
-                else 
-                        fprintf(stderr, "Test Fails\n");
+                if (test_data.value != testValue[i]) {
+                        fprintf(stderr, "Test Fails\n"); 
+                        fprintf(stderr, "Expected key-value pair: [%s]:[%s]\n", 
+                                testKey[i], testValue[i]);
+                        fprintf(stderr, "Key-value pair returned: [%s]:[%s]\n", 
+                                testKey[i], test_data.value); 
+                        exit(EXIT_FAILURE); 
+                }
         }         
 
-        fprintf(stderr, "Deallocating\n"); 
+        fprintf(stderr, "Test Passes\n"); 
 
         dealloc_hashtable(testTable); 
         testTable = NULL;
         assert(testTable == NULL); 
 
         fprintf(stderr, 
-                "********** Leaving test_insert_many_items **********\n\n");
+                "********** Leaving test_insert_and_retrieve_many_items **********\n\n");
 }
 
 void test_get_DataItem_with_key()
@@ -132,26 +136,25 @@ void test_get_DataItem_with_key()
         testTable = alloc_hashtable(5); 
 
         assert(testTable != NULL); 
-        fprintf(stderr, "Alloc Successful!\n");
-        fprintf(stderr, "Calling insert\n");
 
         insert_item(testTable, testKey, testValue); 
 
         DataItem test_data = get_DataItem_with_key(testTable, testKey); 
 
-        fprintf(stderr, "returned testValue: %s", test_data.value); 
+        if (test_data.value != testValue) {
+                fprintf(stderr, "Test Fails\n"); 
+                fprintf(stderr, "Expected key-value pair: [%s]:[%s]\n", 
+                        testKey, testValue);
+                fprintf(stderr, "Returned key-value pair: [%s]:[%s]\n", 
+                        testKey, test_data.value); 
+                exit(EXIT_FAILURE); 
+        }
 
-        if (test_data.value == testValue)
-                fprintf(stderr, "Test Passes\n"); 
-        else 
-                fprintf(stderr, "Test Fails\n");
-
-        fprintf(stderr, "Deallocating\n"); 
+        fprintf(stderr, "Test Passes\n");
 
         dealloc_hashtable(testTable); 
         testTable = NULL;
         assert(testTable == NULL); 
 
-        fprintf(stderr, "Deallocation Successful!\n");
         fprintf(stderr, "********** Leaving test_insert_item **********\n\n");
 }

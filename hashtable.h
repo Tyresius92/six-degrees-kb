@@ -64,6 +64,7 @@ unsigned hashtable_size(Hashtable_t table);
  * in the hashtable. 
  *
  * CREs         key == NULL
+ *              EXIT_FAILURE on full table
  * UREs         attempting to store the same key twice will result in
  *              undefined behavior
  * 
