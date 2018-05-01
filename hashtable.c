@@ -31,7 +31,7 @@ static const unsigned list_of_primes[] = { 3, 7, 17, 31, 127, 709, 5381, 52711,
 static const struct DataItem Empty_Struct = { NULL, NULL };
 
 struct hashtable {
-        unsigned table_size;  
+        unsigned table_size;
         unsigned elements_stored; 
         DataItem *array; 
 }; 
@@ -70,6 +70,10 @@ static unsigned determine_table_size(unsigned num_elems)
 {
         unsigned i;
         unsigned table_size; 
+
+        if ((num_elems * 2) > list_of_primes[NELEMS(list_of_primes) - 1]) {
+                return num_elems * 2; 
+        }
 
         for (i = 1; i < NELEMS(list_of_primes); i++) {
                 if (num_elems * 2 < list_of_primes[i]) {
@@ -129,7 +133,7 @@ static unsigned long hash(unsigned char *key)
         int c;
 
         while ((c = *key++))
-            hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
+                hash = ((hash << 5) + hash) + c; /* hash * 33 + c */
 
         return hash;
 }

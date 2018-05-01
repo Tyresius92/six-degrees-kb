@@ -13,8 +13,11 @@ all: hashunit
 
 ## Make Unit Tests
 
+actorunit: read_actorfile.o actorunit.o
+	$(CC) $^ -o $@ 
+
 hashunit: hashtable.o unitmain.o hashunit.o
 	$(CC) $^ -o $@ 
 
 clean: 
-	-rm *.o *~ hashunit
+	-rm *.o hashunit

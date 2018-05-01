@@ -1,6 +1,16 @@
 #include "hashunit.h"
 #include "hashtable.h"
 
+void run_hashtable_tests()
+{
+        test_alloc_hashtable();
+        test_alloc_big_hashtable();
+        test_dealloc_hashtable();
+        test_insert_item(); 
+        test_insert_and_retrieve_five_items();
+        test_get_DataItem_with_key();
+}
+
 /* 
  * This test will still result in memory leaks. 
  * Hidden array is allocated, but not deallocated.
@@ -83,7 +93,7 @@ void test_insert_item()
         fprintf(stderr, "********** Leaving test_insert_item **********\n\n");
 }
 
-void test_insert_and_retrieve_many_items()
+void test_insert_and_retrieve_five_items()
 {
         fprintf(stderr, 
                 "********** Calling test_insert_and_retrieve_many_items **********\n");
