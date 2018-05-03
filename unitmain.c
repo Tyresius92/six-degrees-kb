@@ -4,7 +4,6 @@
 int main()
 {
         run_hashtable_tests();
-        run_readactor_tests(); 
-
+        
         return 0; 
 }

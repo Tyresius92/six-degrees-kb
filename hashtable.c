@@ -30,6 +30,10 @@ static const unsigned list_of_primes[] = { 3, 7, 17, 31, 127, 709, 5381, 52711,
 
 static const struct DataItem Empty_Struct = { NULL, NULL };
 
+/****************************
+ * HASHTABLE REPRESENTATION *
+ ****************************/
+
 struct hashtable {
         unsigned table_size;
         unsigned elements_stored; 
