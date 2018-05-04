@@ -107,7 +107,7 @@ void test_insert_and_retrieve_five_items()
         assert(testTable != NULL); 
 
         for (int i = 0; i < 5; i++) {
-                insert_item(testTable, testKey[i], testValue[i]);
+                insert_item(testTable, testKey[i], (void *) testValue[i]);
         }
 
         for (int i = 0; i < 5; i++) {
@@ -119,7 +119,7 @@ void test_insert_and_retrieve_five_items()
                         fprintf(stderr, "Expected key-value pair: [%s]:[%s]\n", 
                                 testKey[i], testValue[i]);
                         fprintf(stderr, "Key-value pair returned: [%s]:[%s]\n", 
-                                testKey[i], test_data.value); 
+                                testKey[i], (char *) test_data.value); 
                         exit(EXIT_FAILURE); 
                 }
         }         
@@ -147,7 +147,7 @@ void test_get_DataItem_with_key()
 
         assert(testTable != NULL); 
 
-        insert_item(testTable, testKey, testValue); 
+        insert_item(testTable, testKey, (void *) testValue); 
 
         DataItem test_data = get_DataItem_with_key(testTable, testKey); 
 
@@ -156,7 +156,7 @@ void test_get_DataItem_with_key()
                 fprintf(stderr, "Expected key-value pair: [%s]:[%s]\n", 
                         testKey, testValue);
                 fprintf(stderr, "Returned key-value pair: [%s]:[%s]\n", 
-                        testKey, test_data.value); 
+                        testKey, (char *) test_data.value); 
                 exit(EXIT_FAILURE); 
         }
 

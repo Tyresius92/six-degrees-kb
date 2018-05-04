@@ -101,7 +101,7 @@ unsigned hashtable_elems(T table)
         return table->elements_stored; 
 }
 
-void insert_item(T table, char* key, char* value)
+void insert_item(T table, char* key, void* value)
 {
         assert(table != NULL); 
         assert(key != NULL); 
@@ -110,11 +110,10 @@ void insert_item(T table, char* key, char* value)
         is_full_table(table); 
 
         DataItem new_data; 
-        unsigned long index = hash((unsigned char*) key) % table->table_size;
-
         new_data.key = key; 
         new_data.value = value; 
 
+        unsigned long index = hash((unsigned char*) key) % table->table_size;
         index = adjust_index_linear_probe(table, index); 
 
         table->array[index] = new_data; 

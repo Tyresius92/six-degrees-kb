@@ -25,7 +25,7 @@
 
 typedef struct DataItem {
         char * key; 
-        char * value;
+        void * value;
 } DataItem;
 
 typedef struct hashtable *Hashtable_t;
@@ -69,10 +69,10 @@ unsigned hashtable_size(Hashtable_t table);
  *              undefined behavior
  * 
  * @param       char* - key of the value to be stored
- * @param       char* - value to be stored
+ * @param       void* - item to be stored
  * @return      n/a
  */
-void insert_item(Hashtable_t table, char* key, char* value);
+void insert_item(Hashtable_t table, char* key, void* value);
 
 /* 
  * get_value_at

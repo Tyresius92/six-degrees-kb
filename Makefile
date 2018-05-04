@@ -4,19 +4,16 @@ CFLAGS = -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic
 
 INLCUDES = $(shell echo *.h)
 
-all: hashunit
+all: unittests
 
 ## Compile step
 
 %.o: %.c $(INCLUDES)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-## Make Unit Tests
+## Make Unit Tests 
 
-actorunit: read_actorfile.o actorunit.o
-	$(CC) $^ -o $@ 
-
-hashunit: hashtable.o unitmain.o hashunit.o
+unittests: hashtable.o linkedlist.o unitmain.o hashunit.o listunit.o
 	$(CC) $^ -o $@ 
 
 clean: 
