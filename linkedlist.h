@@ -35,7 +35,7 @@ typedef struct linkedlist *List_t;
 /*
  * List_new
  * 
- * Allocates a new, empty list, in which the head just points to NULL
+ * Allocates a new, empty list, in which the head points to NULL
  * 
  * CREs         n/a
  * UREs         out of memory
@@ -64,7 +64,7 @@ int List_length(List_t list);
  * once you have the first node, you can get each successive node 
  * The last node of any List_t will point to NULL
  */ 
-ListNode get_first_node(List_t list); 
+ListNode *get_first_node(List_t list); 
 
 /*
  * insert_front

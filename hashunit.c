@@ -17,7 +17,7 @@ void run_hashtable_tests()
  */
 void test_alloc_hashtable()
 {
-        fprintf(stderr, "********** Calling test_alloc_hashtable **********\n");
+        fprintf(stderr, "***** Calling test_alloc_hashtable *****\n");
         Hashtable_t testTable = NULL; 
 
         unsigned elems = 10;
@@ -28,8 +28,7 @@ void test_alloc_hashtable()
         fprintf(stderr, "Test Passes\n");
 
         free(testTable); 
-        fprintf(stderr, 
-                "********** Leaving test_alloc_hashtable **********\n\n");
+        fprintf(stderr, "***** Leaving test_alloc_hashtable *****\n\n");
 }
 
 /* 
@@ -38,8 +37,7 @@ void test_alloc_hashtable()
  */
 void test_alloc_big_hashtable()
 {
-        fprintf(stderr, 
-                "********** Calling test_alloc_big_hashtable **********\n");
+        fprintf(stderr, "***** Calling test_alloc_big_hashtable *****\n");
         Hashtable_t testTable = NULL; 
 
         unsigned elems = 10000000;
@@ -50,14 +48,12 @@ void test_alloc_big_hashtable()
         fprintf(stderr, "Test Passes\n");
 
         free(testTable); 
-        fprintf(stderr, 
-                "********** Leaving test_alloc_big_hashtable **********\n\n");
+        fprintf(stderr, "***** Leaving test_alloc_big_hashtable *****\n\n");
 }
 
 void test_dealloc_hashtable()
 {
-        fprintf(stderr, 
-                "********** Calling test_dealloc_hashtable **********\n");
+        fprintf(stderr, "***** Calling test_dealloc_hashtable *****\n");
         Hashtable_t testTable = NULL;
 
         testTable = alloc_hashtable(5); 
@@ -69,13 +65,12 @@ void test_dealloc_hashtable()
         assert(testTable == NULL); 
 
         fprintf(stderr, "Test Passes\n");
-        fprintf(stderr, 
-                "********** Leaving test_dealloc_hashtable **********\n\n");
+        fprintf(stderr, "***** Leaving test_dealloc_hashtable *****\n\n");
 }
 
 void test_insert_item()
 {
-        fprintf(stderr, "********** Calling test_insert_item **********\n");
+        fprintf(stderr, "***** Calling test_insert_item *****\n");
         Hashtable_t testTable = NULL; 
 
         testTable = alloc_hashtable(5); 
@@ -90,13 +85,13 @@ void test_insert_item()
         testTable = NULL;
         assert(testTable == NULL); 
 
-        fprintf(stderr, "********** Leaving test_insert_item **********\n\n");
+        fprintf(stderr, "***** Leaving test_insert_item *****\n\n");
 }
 
 void test_insert_and_retrieve_five_items()
 {
         fprintf(stderr, 
-                "********** Calling test_insert_and_retrieve_many_items **********\n");
+                "***** Calling test_insert_and_retrieve_many_items *****\n");
         Hashtable_t testTable = NULL; 
 
         testTable = alloc_hashtable(5); 
@@ -131,13 +126,13 @@ void test_insert_and_retrieve_five_items()
         assert(testTable == NULL); 
 
         fprintf(stderr, 
-                "********** Leaving test_insert_and_retrieve_many_items **********\n\n");
+                "***** Leaving test_insert_and_retrieve_many_items *****\n\n");
 }
 
 void test_get_DataItem_with_key()
 {
         fprintf(stderr, 
-                "********** Calling test_get_DataItem_with_key **********\n");
+                "***** Calling test_get_DataItem_with_key *****\n");
         
         Hashtable_t testTable = NULL; 
         char *testKey = "testing";
@@ -166,5 +161,5 @@ void test_get_DataItem_with_key()
         testTable = NULL;
         assert(testTable == NULL); 
 
-        fprintf(stderr, "********** Leaving test_insert_item **********\n\n");
+        fprintf(stderr, "***** Leaving test_get_DataItem_with_key *****\n\n");
 }
