@@ -8,3 +8,4 @@ void test_get_string_empty_list();
 void test_insert_front(); 
 void test_insert_several_items(); 
 void test_list_clear(); 
+void test_destroy_list(); 

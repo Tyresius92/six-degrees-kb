@@ -107,17 +107,15 @@ void insert_front(T list, char *new_string)
 
 void List_clear(T list)
 {
-        assert(list != NULL); 
+        assert(list != NULL);
 
-        ListNode *delete_me = list->head; 
-
-        while (delete_me != NULL) {
-                ListNode *next_node = delete_me->next; 
+        while (list->head != NULL) {
+                ListNode *delete_me = list->head; 
+                list->head = list->head->next; 
                 free(delete_me); 
-                delete_me = next_node;
-        }
-
-        list->head = NULL; 
+        } 
+        
+        list->length = 0;
 }
 
 void List_destroy(T list)
@@ -125,5 +123,4 @@ void List_destroy(T list)
         List_clear(list); 
 
         free(list); 
-        list = NULL; 
 }
