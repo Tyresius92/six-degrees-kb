@@ -7,6 +7,8 @@ void run_linkedlist_tests()
         test_list_length_empty_list();
         test_get_string_empty_list(); 
         test_insert_front(); 
+        test_insert_several_items(); 
+        test_list_clear(); 
 }
 
 void test_new_list()
@@ -118,3 +120,94 @@ void test_insert_front()
 
         fprintf(stderr, "***** Leaving test_insert_front *****\n\n");
 }
+
+void test_insert_several_items()
+{
+        fprintf(stderr, "***** Calling test_insert_several_items *****\n"); 
+
+        List_t test_list = NULL; 
+        char *test_strings[] = { "you say", "goodbye", "i say", "hello" };
+        char *verify_string = NULL; 
+
+        test_list = List_new(); 
+
+        for (int i = 0; i < 4; i++) {
+                insert_front(test_list, test_strings[i]);
+        }
+
+        for (int i = 0; i < 4; i++) {
+                verify_string = get_string(test_list, i); 
+
+                if (test_strings[3 - i] != verify_string) {
+                        fprintf(stderr, "Insertion or retrieval failed!\n");
+                        fprintf(stderr, "Verify string != test string\n"); 
+                        exit(EXIT_FAILURE); 
+                }
+        }
+
+        //debug
+        //change to dealloc list once function is written
+        free(test_list); 
+        test_list = NULL; 
+
+        fprintf(stderr, "Test passes\n"); 
+
+        fprintf(stderr, "***** Leaving test_insert_several_items *****\n\n");
+}
+
+void test_list_clear()
+{
+        fprintf(stderr, "***** Calling test_insert_several_items *****\n"); 
+
+        List_t test_list = NULL; 
+        char *test_strings[] = { "you say", "goodbye", "i say", "hello" };
+        char *verify_string = NULL; 
+
+        test_list = List_new(); 
+
+        for (int i = 0; i < 4; i++) {
+                insert_front(test_list, test_strings[i]);
+        }
+
+        for (int i = 0; i < 4; i++) {
+                verify_string = get_string(test_list, i); 
+
+                if (test_strings[3 - i] != verify_string) {
+                        fprintf(stderr, "Insertion or retrieval failed!\n");
+                        fprintf(stderr, "Verify string != test string\n"); 
+                        exit(EXIT_FAILURE); 
+                }
+        }
+
+        //debug
+        fprintf(stderr, "Made it here\n"); 
+
+        List_clear(test_list); 
+
+        //debug 
+        fprintf(stderr, "made it to the next spot\n"); 
+
+
+        verify_string = get_string(test_list, 0); 
+
+        //debug 
+        fprintf(stderr, "it's somewhere near here\n");
+
+        if (verify_string != NULL) {
+                fprintf(stderr, "List_clear failed!\n");
+                exit(EXIT_FAILURE); 
+        }
+
+        //debug
+        fprintf(stderr, "wiggity wack\n");
+
+        //debug
+        //change to dealloc list once function is written
+        free(test_list); 
+        test_list = NULL; 
+
+        fprintf(stderr, "Test passes\n"); 
+
+        fprintf(stderr, "***** Leaving test_insert_several_items *****\n\n");
+}
+
