@@ -20,11 +20,6 @@
 
 /*** DEFINITIONS AND TYPEDEFS ***/
 
-typedef struct ListNode {
-        char *data; 
-        struct ListNode *next;
-} ListNode;
-
 typedef struct linkedlist *List_t;
 
 /**********************
@@ -58,32 +53,39 @@ List_t List_new();
 int List_length(List_t list); 
 
 /*
- * get_first_node
+ * get_string
  * 
- * returns the first node in the List_t
- * once you have the first node, you can get each successive node 
- * The last node of any List_t will point to NULL
- */ 
-ListNode *get_first_node(List_t list); 
-
-/*
- * insert_front
- * 
- * inserts the given ListNode at the front of the list
+ * gets the string in the node indicated by node_num. 
+ * uses a 0 index system. If node_num >= list->length, returns NULL
  * 
  * CREs         list == NULL
  * UREs         n/a
  * 
+ * @param       List_t - list being searched
+ * @param       int - "index" of the node to get a string from
+ * @return      char *
+ */ 
+char *get_string(List_t list, int node_num); 
+
+/*
+ * insert_front
+ * 
+ * inserts the given string at the front of the list
+ * 
+ * CREs         list == NULL
+ * UREs         if new_node->next points to something, it will be lost
+ *                      after this function is called
+ * 
  * @param       List_t - list into which the node is being inserted
- * @param       ListNode - node to be inserted
+ * @param       char* - node to be inserted
  * @return      n/a
  */ 
-void insert_front(List_t list, ListNode new_node);
+void insert_front(List_t list, char* new_string);
 
 /*
  * List_clear
  * 
- * deallocates every ListNode held in the list, sets head to NULL
+ * deallocates everything held in the list, sets head to NULL
  * 
  * CREs	        list == NULL
  * UREs         n/a
@@ -96,7 +98,7 @@ void List_clear(List_t list);
 /*
  * List_destroy
  *
- * deallocates every ListNode held in the list, then deallocates List
+ * clears the list, then deallocates the list
  *
  * CREs         list == NULL
  * UREs         n/a

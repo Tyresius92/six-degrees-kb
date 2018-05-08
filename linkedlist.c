@@ -24,6 +24,15 @@
  ********************/
 
 
+/***************************
+ * LISTNODE REPRESENTATION *
+ ***************************/
+
+typedef struct ListNode {
+        char *data; 
+        struct ListNode *next;
+} ListNode;
+
 /******************************
  * LINKED LIST REPRESENTATION *
  ******************************/
@@ -34,6 +43,8 @@ struct linkedlist {
 }; 
 
 typedef List_t T;
+
+
 
 /*******************************
  * PRIVATE METHOD DECLARATIONS *
@@ -63,17 +74,35 @@ int List_length(T list)
         return list->length; 
 }
 
-ListNode *get_first_node(List_t list)
+char *get_string(List_t list, int node_num)
 {
         assert(list != NULL); 
 
-        return list->head; 
+        if (node_num >= list->length) {
+                return NULL; 
+        }
+
+        ListNode *curr = list->head; 
+
+        for (int i = 0; i < node_num; i++) {
+                curr = curr->next; 
+        }
+
+        return curr->data;  
 }
 
-void insert_front(T list, ListNode new_node)
+void insert_front(T list, char *new_string) 
 {
-        (void) list; 
-        (void) new_node; 
+        assert(list != NULL); 
+
+        ListNode *new_node = malloc(sizeof(ListNode)); 
+
+        new_node->data = new_string; 
+
+        new_node->next = list->head; 
+        list->head = new_node;
+
+        list->length = list->length + 1;  
 }
 
 void List_clear(T list)
