@@ -4,7 +4,7 @@ CFLAGS = -std=c99 -Wall -Wextra -Werror -Wfatal-errors -pedantic
 
 INLCUDES = $(shell echo *.h)
 
-all: unittests
+all: unittests movielist
 
 ## Compile step
 
@@ -13,8 +13,12 @@ all: unittests
 
 ## Make Unit Tests 
 
-unittests: hashtable.o linkedlist.o unitmain.o hashunit.o listunit.o
+movielist: hashtable.o linkedlist.o movielist.o listmaker.o
+	$(CC) $^ -o $@
+
+unittests: hashtable.o linkedlist.o unitmain.o hashunit.o listunit.o \
+		movielist.o movieunit.o
 	$(CC) $^ -o $@ 
 
 clean: 
-	-rm *.o unittests
+	-rm *.o unittests movielist

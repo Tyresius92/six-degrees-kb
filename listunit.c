@@ -186,7 +186,7 @@ void test_list_clear()
 //this test should be run with valgrind
 void test_destroy_list()
 {
-        fprintf(stderr, "***** Calling test_list_clear *****\n"); 
+        fprintf(stderr, "***** Calling test_destroy_list *****\n"); 
 
         List_t test_list = NULL; 
         char *test_strings[] = { "you say", "goodbye", "i say", "hello" };
@@ -212,6 +212,6 @@ void test_destroy_list()
 
         fprintf(stderr, "Test passes\n"); 
 
-        fprintf(stderr, "***** Leaving test_list_clear *****\n\n");
+        fprintf(stderr, "***** Leaving test_destroy_list *****\n\n");
 }
 
