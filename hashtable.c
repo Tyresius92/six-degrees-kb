@@ -23,10 +23,15 @@
  * STATIC VARIABLES *
  ********************/
 
-static const unsigned list_of_primes[] = { 3, 7, 17, 31, 127, 709, 5381, 52711, 
-                                           648379, 999959, 5034937, 9736927, 
-                                           15387793, 20843569, 26326043,
-                                           43467679, 49979323, 59620331 };
+static const unsigned list_of_primes[] = { 3, 7, 17, 31, 67, 127, 709, 2221, 
+                                           5381, 7919, 10691, 15451, 22277, 
+                                           33581, 42487, 52711, 65521, 83561,
+                                           99817, 124433, 147517, 206009, 
+                                           252163, 303337, 350107, 386723,
+                                           457087, 492409, 581809, 648379, 
+                                           999959, 5034937, 9736927, 15387793, 
+                                           20843569, 26326043, 43467679, 
+                                           49979323, 59620331 };
 
 static const struct DataItem Empty_Struct = { NULL, NULL };
 
@@ -60,6 +65,7 @@ T alloc_hashtable(unsigned num_elems)
         T newTable = malloc(sizeof(struct hashtable)); 
 
         newTable->table_size = determine_table_size(num_elems);
+        newTable->elements_stored = 0; 
 
         newTable->array = calloc(newTable->table_size, sizeof(struct DataItem));
         
