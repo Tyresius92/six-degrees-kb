@@ -13,17 +13,6 @@
 
 #include "linkedlist.h"
 
-/*********************
- * MACRO DEFINITIONS *
- *********************/
-
-
-
-/********************
- * STATIC VARIABLES *
- ********************/
-
-
 /***************************
  * LISTNODE REPRESENTATION *
  ***************************/
@@ -43,14 +32,6 @@ struct linkedlist {
 }; 
 
 typedef List_t T;
-
-
-
-/*******************************
- * PRIVATE METHOD DECLARATIONS *
- *******************************/
-
-
 
 /************************
  * FUNCTION DEFINITIONS *

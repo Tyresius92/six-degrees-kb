@@ -1,7 +1,10 @@
 /**********************************************************************
  * linkedlist.h                                                       *
  *                                                                    *
- *                                                                    *
+ * interface of a linked list                                         *
+ * implementation only supports insertion and clearing the entire     * 
+ * list. functionality for sorting, deleting single nodes, etc. does  * 
+ * not exist.                                                         *
  **********************************************************************/
 
 /***************************
