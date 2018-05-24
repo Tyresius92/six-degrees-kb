@@ -21,4 +21,4 @@ unittests: hashtable.o linkedlist.o unitmain.o hashunit.o listunit.o \
 	$(CC) $^ -o $@ 
 
 clean: 
-	-rm *.o unittests movielist
+	-rm *.o *.exe unittests movielist
